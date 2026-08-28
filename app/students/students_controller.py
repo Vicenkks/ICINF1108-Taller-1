@@ -23,14 +23,23 @@ def find_by_id(student_id: str) -> StandardResponse[Student]:
     )
 
 @router.post("", status_code=201)
-def create(body: CreateStudentDto) -> Student:
-    return students_service.create(body)
+def create(body: CreateStudentDto) -> StandardResponse[Student]:
+    return StandardResponse(
+        success = True,
+        statusCode = 200,
+        message = "Student posted successfully",
+        data = students_service.create(body)
+    )
 
 
 @router.patch("/{student_id}")
-def update(student_id: str, body: UpdateStudentDto) -> Student:
-    return students_service.update(student_id, body)
-
+def update(student_id: str, body: UpdateStudentDto) -> StandardResponse[Student]:
+    return StandardResponse(
+        success = True,
+        statusCode = 200,
+        message = "Student updated by id successfully",
+        data = students_service.update(student_id, body)
+    )
 
 @router.delete("/{student_id}")
 def delete(student_id: str) -> Student:
