@@ -4,6 +4,7 @@ from app.pets.pets_service import pets_service
 from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
 from app.students.students_service import students_service
 
+from app.utils.apiResponse import StandardResponse
 router = APIRouter(prefix="/api/students", tags=["Students"])
 
 
@@ -12,10 +13,14 @@ def find_all() -> list[Student]:
     return students_service.find_all()
 
 
-@router.get("/{student_id}")
-def find_by_id(student_id: str) -> Student:
-    return students_service.find_by_id(student_id)
-
+@router.get("/{student_id}", response_model = StandardResponse[Student])
+def find_by_id(student_id: str) -> StandardResponse[Student]:
+    return StandardResponse(
+        success = True,
+        statusCode = 200,
+        message = "Users obtained successful",
+        data = students_service.find_by_id(student_id)
+    )
 
 @router.post("", status_code=201)
 def create(body: CreateStudentDto) -> Student:
