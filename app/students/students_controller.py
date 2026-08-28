@@ -42,8 +42,13 @@ def update(student_id: str, body: UpdateStudentDto) -> StandardResponse[Student]
     )
 
 @router.delete("/{student_id}")
-def delete(student_id: str) -> Student:
+def delete(student_id: str) -> StandardResponse[Student]:
     deleted = students_service.delete(student_id)
     pets_service.delete_all_for_student(student_id)
 
-    return deleted
+    return StandardResponse(
+        success = True,
+        statusCode = 200,
+        message = "Student deleted successfully",
+        data = deleted
+    )
