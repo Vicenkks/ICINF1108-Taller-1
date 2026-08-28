@@ -8,9 +8,18 @@ from app.utils.apiResponse import StandardResponse
 router = APIRouter(prefix="/api/students", tags=["Students"])
 
 
-@router.get("")
-def find_all() -> list[Student]:
-    return students_service.find_all()
+@router.get("",
+    response_model=StandardResponse[list[Student]]
+)
+def find_all():
+    students = students_service.find_all()
+
+    return StandardResponse(
+        success=True,
+        statusCode=200,
+        message="Students retrieved successfully",
+        data=students
+    )
 
 
 @router.get("/{student_id}", response_model = StandardResponse[Student])

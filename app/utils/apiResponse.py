@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 DataT = TypeVar("DataT")
 
 
-class StudentResponse(BaseModel, Generic[DataT]):
+class StandardResponse(BaseModel, Generic[DataT]):
     success: bool = True
     statusCode: int = 200
     message: str = "Ok"
